@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+SCHEMA_VERSION=1
+
+set -e
+
+# On developers environment export SOLR_HOST and export SOLR_COLLECTION before running
+HOST=${SOLR_HOST:-"localhost:8983"}
+COLLECTION=${SOLR_COLLECTION:-"bulk-analytics-v$SCHEMA_VERSION"}
+BASE_CONFIG=${SOLR_BASE_CONFIG:-"_default"}
+
+NUM_SHARDS=${SOLR_NUM_SHARDS:-1}
+REPLICATION_FACTOR=${SOLR_REPLICATION_FACTOR:-1}
+
+printf "\n\nDeleting collection $COLLECTION based on $HOST\n"
+curl "http://$HOST/solr/admin/collections?action=DELETE&name=$COLLECTION&numShards=$NUM_SHARD&replicationFactor=$NUM_REPL"
+
+printf "\n\nDelete config $COLLECTION\n"
+curl "http://$HOST/solr/admin/configs?action=DELETE&name=$COLLECTION"
+
+printf "\n\nCreating config based on $BASE_CONFIG for our collection\n"
+curl "http://$HOST/solr/admin/configs?action=CREATE&name=$COLLECTION&baseConfigSet=$BASE_CONFIG"
+
+printf "\n\nCreating collection $COLLECTION based on $HOST\n"
+curl "http://$HOST/solr/admin/collections?action=CREATE&name=$COLLECTION&numShards=$NUM_SHARDS&replicationFactor=$REPLICATION_FACTOR"
+
+#############################################################################################
+
+printf "\n\nAliasing base collection atlas-bulk to latest iteration $COLLECTION\n"
+curl "http://$HOST/solr/admin/collections?action=CREATEALIAS&name=bulk-analytics&collections=$COLLECTION"
