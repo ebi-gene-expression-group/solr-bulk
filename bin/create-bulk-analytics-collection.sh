@@ -27,3 +27,30 @@ curl "http://$HOST/solr/admin/collections?action=CREATE&name=$COLLECTION&numShar
 
 printf "\n\nAliasing base collection atlas-bulk to latest iteration $COLLECTION\n"
 curl "http://$HOST/solr/admin/collections?action=CREATEALIAS&name=bulk-analytics&collections=$COLLECTION"
+
+#############################################################################################
+
+printf "\n\nDisabling auto-commit and soft auto-commit in $COLLECTION\n"
+curl "http://$HOST/solr/$COLLECTION/config" -H 'Content-type:application/json' -d '{
+  "set-property": {
+    "updateHandler.autoCommit.maxTime":-1
+  }
+}'
+
+curl "http://$HOST/solr/$COLLECTION/config" -H 'Content-type:application/json' -d '{
+  "set-property": {
+    "updateHandler.autoCommit.maxDocs":-1
+  }
+}'
+
+curl "http://$HOST/solr/$COLLECTION/config" -H 'Content-type:application/json' -d '{
+  "set-property": {
+    "updateHandler.autoSoftCommit.maxTime":-1
+  }
+}'
+
+curl "http://$HOST/solr/$COLLECTION/config" -H 'Content-type:application/json' -d '{
+  "set-property": {
+    "updateHandler.autoSoftCommit.maxDocs":-1
+  }
+}'
