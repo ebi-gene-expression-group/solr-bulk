@@ -19,7 +19,7 @@ The scripts delete any previous version of the collection version and its
 fields and field types, so error messages are to be expected the first time the
 scripts are run.
 
-The collection is populated from the web app using these two URLs:
+The collection is populated from the web app using these URLs:
 * `/admin/analyticsIndex/buildIndex`: imports the data of public experiments
 only. Use the URL `/admin/analyticsIndex/buildIndex/status` to follow the
 indexing progress.
