@@ -15,8 +15,8 @@ To create the collection run the following two scripts:
 ./bin/create-bulk-analytics-schema.sh
 ```
 
-The scripts delete any previous version of the collection version and its
-fields and field types, so error messages are to be expected the first time the
+The scripts delete any previous version of the version and its fields and 
+field types, so error messages are to be expected the first time the
 scripts are run.
 
 The collection is populated from the web app using these URLs:
