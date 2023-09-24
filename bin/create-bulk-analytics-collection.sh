@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
-SCHEMA_VERSION=1
-
 set -e
 
 # On developers environment export SOLR_HOST and export SOLR_COLLECTION before running
 HOST=${SOLR_HOST:-"localhost:8983"}
-COLLECTION=${SOLR_COLLECTION:-"bulk-analytics-v$SCHEMA_VERSION"}
+COLLECTION=${SOLR_COLLECTION:-"bulk-analytics"}-v${SCHEMA_VERSION:-"1"}
 
 NUM_SHARDS=${SOLR_NUM_SHARDS:-1}
 REPLICATION_FACTOR=${SOLR_REPLICATION_FACTOR:-1}
