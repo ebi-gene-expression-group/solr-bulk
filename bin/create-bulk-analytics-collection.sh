@@ -10,6 +10,13 @@ COLLECTION=${SOLR_COLLECTION:-"bulk-analytics-v$SCHEMA_VERSION"}
 NUM_SHARDS=${SOLR_NUM_SHARDS:-1}
 REPLICATION_FACTOR=${SOLR_REPLICATION_FACTOR:-1}
 
+#############################################################################################
+
+printf "\n\Deleting previous alias of $COLLECTION\n"
+curl "http://$HOST/solr/admin/collections?action=DELETEALIAS&name=bulk-analytics"
+
+#############################################################################################
+
 printf "\n\nDeleting collection $COLLECTION based on $HOST\n"
 curl "http://$HOST/solr/admin/collections?action=DELETE&name=$COLLECTION&numShards=$NUM_SHARD&replicationFactor=$NUM_REPL"
 
