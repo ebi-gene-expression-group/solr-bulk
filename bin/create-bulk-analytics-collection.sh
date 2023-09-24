@@ -18,7 +18,7 @@ curl "http://$HOST/solr/admin/collections?action=DELETEALIAS&name=bulk-analytics
 #############################################################################################
 
 printf "\n\nDeleting collection $COLLECTION based on $HOST\n"
-curl "http://$HOST/solr/admin/collections?action=DELETE&name=$COLLECTION&numShards=$NUM_SHARD&replicationFactor=$NUM_REPL"
+curl "http://$HOST/solr/admin/collections?action=DELETE&name=$COLLECTION"
 
 printf "\n\nCreating collection $COLLECTION based on $HOST\n"
 curl "http://$HOST/solr/admin/collections?action=CREATE&name=$COLLECTION&numShards=$NUM_SHARDS&replicationFactor=$REPLICATION_FACTOR"
