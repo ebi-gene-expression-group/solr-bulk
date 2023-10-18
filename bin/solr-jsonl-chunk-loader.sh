@@ -1,0 +1,1 @@
+solr-jsonl-loader/solr-jsonl-chunk-loader.sh
