@@ -3,7 +3,7 @@ SCHEMA_VERSION=1
 
 # On developers environment export SOLR_HOST and export SOLR_COLLECTION before running
 HOST=${SOLR_HOST:-"localhost:8983"}
-COLLECTION=${SOLR_COLLECTION:-"bulk-analytics-v${SCHEMA_VERSION}"}
+COLLECTION="${SOLR_COLLECTION:-"bulk-analytics"}-v${SCHEMA_VERSION:-"1"}"
 
 #############################################################################################
 
