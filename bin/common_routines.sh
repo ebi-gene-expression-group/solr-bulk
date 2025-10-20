@@ -46,3 +46,23 @@ function _trap_DEBUG() {
 }
 
 # trap '_trap_DEBUG' DEBUG
+
+# ----------------------------
+# Solr utility functions
+# ----------------------------
+delete_solr_field() {
+  local field_name="$1"
+  
+  if [[ -z "$field_name" ]]; then
+    error "delete_solr_field requires: field_name"
+    return 1
+  fi
+  
+  info "Delete field $field_name"
+  curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary "{
+    \"delete-field\":
+    {
+      \"name\": \"$field_name\"
+    }
+  }" "http://${HOST}/solr/${COLLECTION}/schema" || warn "field delete may have been unnecessary"
+}

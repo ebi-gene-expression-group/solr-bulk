@@ -24,13 +24,7 @@ fi
 
 #############################################################################################
 
-info "Delete field experiment_accession"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "experiment_accession"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "experiment_accession"
 
 info "Create field experiment_accession (string, DocValues)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -45,12 +39,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 #############################################################################################
 
 info "Delete field is_private"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "is_private"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "is_private"
 
 info "Create field is_private (boolean)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -71,14 +60,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
     "dest": "bioentity_identifier_search"
   }
 }' http://${HOST}/solr/${COLLECTION}/schema
-
-info "Delete field bioentity_identifier"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "bioentity_identifier"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "bioentity_identifier"
 
 info "Create field bioentity_identifier (string, DocValues)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -90,13 +72,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
   }
 }' http://${HOST}/solr/${COLLECTION}/schema
 
-info "Delete field bioentity_identifier_search"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "bioentity_identifier_search"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "bioentity_identifier_search"
 
 info "Create field bioentity_identifier_search (lowercase)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -118,13 +94,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete field assay_group_id"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field" :
-  {
-    "name": "assay_group_id"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "assay_group_id"
 
 info "Create field assay_group_id (string, DocValues)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -138,13 +108,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete field contrast_id"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "contrast_id"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "contrast_id"
 
 info "Create field contrast_id (string)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -157,13 +121,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete field species"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "species"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "species"
 
 info "Create field species (string, DocValues)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -177,13 +135,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete field kingdom"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "kingdom"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "kingdom"
 
 info "Create field kingdom (string, DocValues)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -198,13 +150,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete field experiment_type"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "experiment_type"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "experiment_type"
 
 info "Create field experiment_type (string, DocValues)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -219,12 +165,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 #############################################################################################
 
 info "Delete field default_query_factor_type"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "default_query_factor_type"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "default_query_factor_type"
 
 info "Create field default_query_factor_type (string, DocValues)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -239,13 +180,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete field factors"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "factors"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "factors"
 
 info "Create field factors (string, multi-valued, DocValues)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -260,13 +195,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete field expression_level"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "expression_level"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "expression_level"
 
 info "Create field expression_level (pdouble, DocValues)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -280,13 +209,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete field expression_level_fpkm"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "expression_level_fpkm"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "expression_level_fpkm"
 
 info "Create field expression_level_fpkm (pdouble, DocValues)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -300,13 +223,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete expression_levels"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "expression_levels"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "expression_levels"
 
 info "Create expression_levels (pdouble, multi-valued)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -320,13 +237,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete expression_levels_fpkm"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "expression_levels_fpkm"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field expression_levels_fpkm
 
 info "Create expression_levels_fpkm (pdouble, multi-valued)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -340,13 +251,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete field num_replicates"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "num_replicates"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "num_replicates"
 
 info "Create field num_replicates (pint, DocValues)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -360,13 +265,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete field fold_change"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "fold_change"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "fold_change"
 
 info "Create field fold_change (pdouble, DocValues)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -380,13 +279,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete field p_value"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "p_value"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "p_value"
 
 info "Create field p_value (pdouble, DocValues)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -400,13 +293,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete field t_statistic"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "t_statistic"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "t_statistic"
 
 info "Create field t_statistic (pdouble)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -419,13 +306,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete field regulation"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field":
-  {
-    "name": "regulation"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "regulation"
 
 info "Create field regulation (string, DocValues)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -455,13 +336,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete field identifier_search"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field" :
-  {
-    "name": "identifier_search"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "identifier_search"
 
 info "Create field identifier_search (text_en)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -475,21 +350,9 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 #############################################################################################
 
-info "Delete field conditions_search"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field" :
-  {
-    "name": "conditions_search"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "conditions_search"
 
-info "Delete field type text_en_tight"
-curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
-  "delete-field-type":
-  {
-    "name": "text_en_tight"
-  }
-}' http://${HOST}/solr/${COLLECTION}/schema
+delete_solr_field "text_en_tight"
 
 info "Create field type text_en_tight"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
