@@ -20,8 +20,8 @@ NUM_SHARDS=${SOLR_NUM_SHARDS:-1}
 REPLICATION_FACTOR=${SOLR_REPLICATION_FACTOR:-1}
 # Default curl behavior: silent progress, show errors, fail on HTTP errors
 export CURL_OUTPUT_PARSER=$(which jq > /dev/null && echo jq || echo tee)
-CURL_OPTS="${SOLR_AUTH} --fail"
 
+CURL_OPTS="${SOLR_AUTH} --fail"
 if [ "${DEBUG_POPULATION}" = "true" ]; then
   set -vx
   CURL_OPTS="$CURL_OPTS -v"
