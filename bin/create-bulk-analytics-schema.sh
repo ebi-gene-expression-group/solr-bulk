@@ -59,7 +59,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
     "source": "bioentity_identifier",
     "dest": "bioentity_identifier_search"
   }
-}' http://${HOST}/solr/${COLLECTION}/schema || warn "field delete may have been unnecessary"  
+}' http://${HOST}/solr/${COLLECTION}/schema || warn "field delete may have been unnecessary"
 delete_solr_field "bioentity_identifier"
 
 info "Create field bioentity_identifier (string, DocValues)"
@@ -324,7 +324,7 @@ info "Delete dynamic field rule keyword_*"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
   "delete-dynamic-field": {
      "name": "keyword_*"}
-}' http://${HOST}/solr/${COLLECTION}/schema
+}' http://${HOST}/solr/${COLLECTION}/schema || warn "field delete may have been unnecessary"
 
 info "Create dynamic rule keyword_* (string, multi-valued)"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -352,7 +352,13 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 
 delete_solr_field "conditions_search"
 
-delete_solr_field "text_en_tight"
+info "Delete field type text_en_tight"
+curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
+  "delete-field-type":
+  {
+    "name": "text_en_tight"
+  }
+}' http://${HOST}/solr/${COLLECTION}/schema
 
 info "Create field type text_en_tight"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
@@ -394,7 +400,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
 info "Delete dedupe update processor"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
   "delete-updateprocessor": "dedupe"
-}' http://${HOST}/solr/${COLLECTION}/config
+}' http://${HOST}/solr/${COLLECTION}/config || warn "update processor delete may have been unnecessary"
 
 
 info "Disable autoCreateFields (aka “Data driven schema”)"
