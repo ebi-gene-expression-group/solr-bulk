@@ -59,7 +59,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
     "source": "bioentity_identifier",
     "dest": "bioentity_identifier_search"
   }
-}' http://${HOST}/solr/${COLLECTION}/schema
+}' http://${HOST}/solr/${COLLECTION}/schema || warn "field delete may have been unnecessary"  
 delete_solr_field "bioentity_identifier"
 
 info "Create field bioentity_identifier (string, DocValues)"
