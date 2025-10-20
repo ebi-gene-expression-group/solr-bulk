@@ -31,7 +31,7 @@ info "Deleting alias 'bulk-analytics' if exists"
 curl $CURL_OPTS "http://${HOST}/solr/admin/collections?action=DELETEALIAS&name=bulk-analytics" > /dev/null 2>&1 || warn "Alias delete may have been unnecessary"
 
 info "Deleting collection ${COLLECTION} on ${HOST} (ignore if not exists)"
-curl ${CURL_OPTS} "http://${HOST}/solr/admin/collections?action=DELETE&name=${COLLECTION}" | $CURL_OUTPUT_PARSER
+curl ${CURL_OPTS} "http://${HOST}/solr/admin/collections?action=DELETE&name=${COLLECTION}" || warn "Collection delete may have been unnecessary"
 
 info "Creating collection ${COLLECTION} on ${HOST}"
 curl ${CURL_OPTS} "http://${HOST}/solr/admin/collections?action=CREATE&name=${COLLECTION}&numShards=${NUM_SHARDS}&replicationFactor=${REPLICATION_FACTOR}" | $CURL_OUTPUT_PARSER
