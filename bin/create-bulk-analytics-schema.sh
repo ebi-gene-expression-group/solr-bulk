@@ -358,7 +358,7 @@ curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
   {
     "name": "text_en_tight"
   }
-}' http://${HOST}/solr/${COLLECTION}/schema
+}' http://${HOST}/solr/${COLLECTION}/schema || warn "field type text_en_tight delete may have been unnecessary"
 
 info "Create field type text_en_tight"
 curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary '{
