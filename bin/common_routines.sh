@@ -50,6 +50,39 @@ function _trap_DEBUG() {
 # ----------------------------
 # Solr utility functions
 # ----------------------------
+curl_post_json() {
+  local url="$1"
+  local json_payload="$2"
+  local can_fail="$3"
+  
+  if [[ -z "$url" ]]; then
+    error "curl_post_json requires: url"
+    return 1
+  fi
+  
+  if [[ -z "$json_payload" ]]; then
+    error "curl_post_json requires: json_payload"
+    return 1
+  fi
+  
+  local curl_output
+  curl_output=$(curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary "$json_payload" "$url" 2>&1)
+  local curl_exit_code=$?
+  
+  if [[ $curl_exit_code -ne 0 ]]; then
+    if [[ "$can_fail" == "can_fail" ]]; then
+      warn "allowed failure curl POST for URL: $url (non-fatal)"
+      echo "$curl_output"
+      return 0
+    else
+      error "curl POST failed for URL: $url"
+      echo "$curl_output"
+      return $curl_exit_code
+    fi
+  fi
+  
+  echo "$curl_output"
+}
 delete_solr_field() {
   local field_name="$1"
   
@@ -59,10 +92,103 @@ delete_solr_field() {
   fi
   
   info "Delete field $field_name"
-  curl ${CURL_OPTS} -X POST -H 'Content-type:application/json' --data-binary "{
-    \"delete-field\":
+  curl_post_json "http://${HOST}/solr/${COLLECTION}/schema" "{ 
+     \"delete-field\":
     {
       \"name\": \"$field_name\"
     }
-  }" "http://${HOST}/solr/${COLLECTION}/schema" || warn "field delete may have been unnecessary"
+  }" "can_fail"             
+}
+
+delete_solr_field_type() {
+  local field_type="$1"
+  
+  if [[ -z "$field_type" ]]; then
+    error "delete_solr_field_type requires: field_type"
+    return 1
+  fi
+  
+  info "Delete field type $field_type"
+  curl_post_json "http://${HOST}/solr/${COLLECTION}/schema" "{
+    \"delete-field-type\":
+    {
+      \"name\": \"$field_type\"
+    }
+  }" "http://${HOST}/solr/${COLLECTION}/schema" 
+}
+
+add_solr_field() {
+  local field_name="$1"
+  local field_type="$2"
+  
+  if [[ -z "$field_name" ]]; then
+    error "add_solr_field requires: field_name"
+    return 1
+  fi
+  
+  if [[ -z "$field_type" ]]; then
+    error "add_solr_field requires: field_type"
+    return 1 
+  fi
+  
+  # Shift to get optional arguments
+  shift 2
+  
+  # Check for multiValued and notStored arguments (order doesn't matter)
+  local multi_valued=""
+  local not_stored=""
+  
+  for arg in "$@"; do
+    if [[ "$arg" == "multiValued" ]]; then
+      multi_valued="true"
+    elif [[ "$arg" == "notStored" ]]; then
+      not_stored="true"
+    elif [[ "$arg" == "docValues" ]]; then
+      doc_values="true"
+    fi
+  done
+  
+  # Build the JSON payload
+  local json_payload="{
+    \"add-field\":
+    {
+      \"name\": \"$field_name\",
+      \"type\": \"$field_type\""
+  
+  # Add multiValued if present
+  if [[ -n "$multi_valued" ]]; then
+    json_payload="$json_payload,
+      \"multiValued\": true"
+  fi
+  
+  # Add stored:false if notStored is present
+  if [[ -n "$not_stored" ]]; then
+    json_payload="$json_payload,
+      \"stored\": false"
+  fi
+  
+  json_payload="$json_payload
+    }
+  }"
+  
+  local log_msg="Add field $field_name (type: $field_type)"
+  if [[ -n "$multi_valued" ]]; then
+    log_msg="$log_msg, multiValued: true"
+  fi
+  if [[ -n "$not_stored" ]]; then
+    log_msg="$log_msg, stored: false"
+  fi
+  if [[ -n "$doc_values" ]]; then
+    log_msg="$log_msg, docValues: true"
+  fi
+  
+  info "$log_msg"
+  local curl_output
+  curl_output=$(curl_post_json "http://${HOST}/solr/${COLLECTION}/schema" "$json_payload")
+  local curl_exit_code=$?
+  
+  if [[ $curl_exit_code -ne 0 ]]; then
+    error "Failed to add field $field_name"
+    return $curl_exit_code
+  fi
 }
