@@ -92,8 +92,8 @@ delete_solr_field() {
   fi
   
   info "Delete field $field_name"
-  curl_post_json "http://${HOST}/solr/${COLLECTION}/schema" "{ 
-     \"delete-field\":
+  curl_post_json "http://${HOST}/solr/${COLLECTION}/schema" "{
+    \"delete-field\":
     {
       \"name\": \"$field_name\"
     }
@@ -114,7 +114,7 @@ delete_solr_field_type() {
     {
       \"name\": \"$field_type\"
     }
-  }" "http://${HOST}/solr/${COLLECTION}/schema" 
+  }" "can_fail" 
 }
 
 add_solr_field() {
